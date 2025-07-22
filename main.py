@@ -1,10 +1,11 @@
 import os
-import uuid
+# import uuid
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from enum import Enum
+from database import ensure_wellness_progress_exists
 
 from services.message_processor import process_user_message
 
@@ -59,6 +60,7 @@ async def chat_endpoint(chat_req: ChatRequest):
             user_message=user_message,
             job=role,
         )
+        print(response)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
@@ -67,10 +69,8 @@ async def chat_endpoint(chat_req: ChatRequest):
 
 @app.post("/api/wellness-check")
 async def trigger_wellness_check():
-    """
-    Triggers the wellness check as if the user provided an empty message.
-    """
     try:
+        await ensure_wellness_progress_exists(DEFAULT_USER_ID)
         response = await process_user_message(
             DEFAULT_USER_ID, DEFAULT_SESSION_ID, "", trigger_wellness=True
         )
