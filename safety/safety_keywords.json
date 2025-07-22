@@ -1,0 +1,12 @@
+{
+  "crisis_triggers": [
+    "suicide", "kill myself", "end it all", "overdose", "self-harm", "cut myself",
+    "i want to die", "jump off", "no reason to live", "can't go on",
+    "ending my life", "hurt myself"
+  ],
+  "unsafe_keywords": [
+    "take drugs", "stop medication", "skip therapy", "refuse treatment",
+    "ignore your doctor", "avoid therapy", "quit meds", "drop your pills",
+    "no need for help"
+  ]
+}

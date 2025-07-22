@@ -116,3 +116,12 @@ async def save_long_term_note(user_id: str, memory: str, last_interaction_at):
     finally:
         if conn:
             await conn.close()
+
+
+async def save_wellness_data(user_id, data: dict):
+    conn = await asyncpg.connect(os.getenv("DATABASE_URL"))
+    await conn.execute("""
+        INSERT INTO wellness_checkins (user_id, sleep_quality, mood, healthy_eating, physical_activity)
+        VALUES ($1, $2, $3, $4, $5)
+    """, user_id, data.get("sleep_quality"), data.get("mood"), data.get("healthy_eating"), data.get("physical_activity"))
+    await conn.close()
