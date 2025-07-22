@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-# from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_mistralai import ChatMistralAI
 from langchain_cohere import ChatCohere
@@ -17,14 +17,14 @@ async def initialize_openai():
     )
     return llm
 
-# async def initialize_gemini():
-#     api_key = os.getenv("GEMINI_API_KEY")
-#     llm = ChatGoogleGenerativeAI(
-#         model="gemini-1.5-flash",
-#         google_api_key=api_key,
-#         temperature=0.7,
-#     )
-#     return llm
+async def initialize_gemini():
+    api_key = os.getenv("GEMINI_API_KEY")
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
+        google_api_key=api_key,
+        temperature=0.7,
+    )
+    return llm
 
 
 async def initialize_mistral():
@@ -81,10 +81,10 @@ async def initialize_deepseek():
 
 
 async def get_model_llm():
-    provider = os.getenv("LLM_PROVIDER", "openai").lower()
+    provider = os.getenv("LLM_PROVIDER", "gemini").lower()
 
     initializer_map = {
-        # "gemini": initialize_gemini,
+        "gemini": initialize_gemini,
         "mistral": initialize_mistral,
         "mixtral": initialize_mixtral,
         "llama 3": initialize_llama,
