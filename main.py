@@ -54,8 +54,8 @@ async def chat_endpoint(chat_req: ChatRequest):
 
     try:
         response = await process_user_message(
-            user_id="default_user", 
-            session_id="default_session",
+            user_id=DEFAULT_USER_ID, 
+            session_id=DEFAULT_SESSION_ID,
             user_message=user_message,
             job=role,
         )

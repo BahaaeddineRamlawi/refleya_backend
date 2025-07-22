@@ -11,7 +11,7 @@ load_dotenv()
 async def initialize_openai():
     api_key = os.getenv("OPENAI_API_KEY")
     llm = ChatOpenAI(
-        model_name="gpt-4o-mini",
+        model_name="gpt-3.5-turbo",
         openai_api_key=api_key,
         temperature=0.7,
     )
