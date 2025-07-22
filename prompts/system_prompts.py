@@ -3,8 +3,8 @@ from utils.logger import logger
 def get_persona_prompt(mode="cbt", job="supporter"):
     try:
         job_instruction = {
-            "supporter": "Your tone is empathetic, gentle, and uplifting.",
-            "challenger": "Your tone is constructive, direct, and helps the user challenge their thoughts.",
+            "supporter": "You are a Supporter. Your tone is empathetic, gentle, and uplifting.",
+            "challenger": "You are a Challenger. Your tone is constructive, direct, and helps the user challenge their thoughts.",
         }.get(job, "Your tone is supportive by default.")
 
         prompts = {
