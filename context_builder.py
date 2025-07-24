@@ -17,11 +17,11 @@ MAX_CONTEXT_CHARS = MAX_CONTEXT_TOKENS * APPROX_TOKEN_CHAR_RATIO
 def approx_token_count(text: str) -> int:
     return len(text) // APPROX_TOKEN_CHAR_RATIO
 
-async def build_context(user_id: str, session_id: str, user_message: str, mode="cbt", job="supporter") -> str:
+async def build_context(user_id: str, session_id: str, user_message: str, mode="cbt") -> str:
     try:
         logger.info(f"Building context for user_id: {user_id}, session_id: {session_id}")
 
-        system_prompt = get_persona_prompt(mode, job)
+        system_prompt = get_persona_prompt(mode)
         system_part = f"System: {system_prompt.strip()}"
 
         # --- Short-Term Memory ---

@@ -44,6 +44,7 @@ DEFAULT_SESSION_ID = "session_4"
 async def chat_endpoint(chat_req: ChatRequest):
     user_message = chat_req.message.strip()
     role = chat_req.role.value
+    mode = chat_req.mode if hasattr(chat_req, "mode") else "leya"  # default
 
     if not user_message:
         raise HTTPException(status_code=400, detail="Empty message is not allowed.")
@@ -58,12 +59,12 @@ async def chat_endpoint(chat_req: ChatRequest):
             user_id=DEFAULT_USER_ID, 
             session_id=DEFAULT_SESSION_ID,
             user_message=user_message,
-            job=role,
+            mode=mode,
         )
-        print(response)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+
 
     
 
@@ -79,4 +80,4 @@ async def trigger_wellness_check():
         raise HTTPException(status_code=500, detail=f"Wellness error: {str(e)}")
 
 
-# run server uvicorn main:app --reload --port 8000
+# run server: uvicorn main:app --reload --port 8000

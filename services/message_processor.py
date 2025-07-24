@@ -37,7 +37,7 @@ async def should_trigger_wellness_check(user_id: str, user_message: str, trigger
         return False
 
 
-async def process_user_message(user_id, session_id, user_message, mode="cbt", job="supporter", trigger_wellness=False):
+async def process_user_message(user_id, session_id, user_message, mode="cbt", trigger_wellness=False):
     # Crisis check
     crisis_msg = crisis_redirect(user_message)
     if crisis_msg:
@@ -53,7 +53,7 @@ async def process_user_message(user_id, session_id, user_message, mode="cbt", jo
 
     # Otherwise, fallback to main LLM conversation
     try:
-        context_prompt = await build_context(user_id, session_id, user_message, mode, job)
+        context_prompt = await build_context(user_id, session_id, user_message, mode)
         llm = await get_model_llm()
 
         response = await llm.ainvoke(context_prompt)
