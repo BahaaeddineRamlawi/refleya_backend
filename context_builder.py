@@ -33,7 +33,6 @@ async def build_context(user_id: str, session_id: str, user_message: str, mode="
             formatted_short_history = "Short-term memory unavailable."
 
         short_term_lines = formatted_short_history.strip().split("\n")
-        # Fix here: avoid f-string with inner \n join — build string with concatenation instead
         short_term_part = "Conversation History:\n" + "\n".join(short_term_lines).strip()
 
         # --- Long-Term Memory ---
@@ -44,16 +43,13 @@ async def build_context(user_id: str, session_id: str, user_message: str, mode="
             long_term_memory = "Long-term memory unavailable."
 
         long_term_lines = long_term_memory.strip().split("\n")
-        # Fix here as well
         long_term_part = "Long-term Memory:\n" + "\n".join(long_term_lines).strip()
 
         user_part = f"User: {user_message.strip()}"
 
-        # Initial context parts
         context_parts = [system_part, long_term_part, short_term_part, user_part]
         full_context = "\n\n".join(context_parts)
 
-        # Trim context if it exceeds token limit
         while approx_token_count(full_context) > MAX_CONTEXT_TOKENS:
             if len(short_term_lines) > 2:
                 short_term_lines = short_term_lines[:-2]

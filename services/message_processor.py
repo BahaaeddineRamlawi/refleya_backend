@@ -38,7 +38,6 @@ async def should_trigger_wellness_check(user_id: str, user_message: str, trigger
 
 
 async def process_user_message(user_id, session_id, user_message, mode="cbt", trigger_wellness=False):
-    # Crisis check
     crisis_msg = crisis_redirect(user_message)
     if crisis_msg:
         await save_message(user_id, session_id, "user", user_message)
@@ -51,7 +50,6 @@ async def process_user_message(user_id, session_id, user_message, mode="cbt", tr
     except Exception as e:
         logger.error(f"Wellness check triggering failed for user {user_id}: {e}", exc_info=True)
 
-    # Otherwise, fallback to main LLM conversation
     try:
         context_prompt = await build_context(user_id, session_id, user_message, mode)
         llm = await get_model_llm()

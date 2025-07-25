@@ -28,5 +28,5 @@ def get_persona_prompt(mode: str) -> str:
 
     prompt = prompts.get(mode.lower())
     if not prompt:
-        logger.error(f"Error generating persona prompt: {e}", exc_info=True)
+        logger.error(f"Error generating persona prompt", exc_info=True)
     return prompt

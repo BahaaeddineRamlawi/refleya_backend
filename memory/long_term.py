@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 from models import get_model_llm
 from utils.logger import logger
-import datetime  # import for fallback timestamp
+import datetime
 
 load_dotenv()
 LONG_TERM_MEMORY_MAX_TOKENS = int(os.getenv("LONG_TERM_MEMORY_MAX_TOKENS"))
@@ -58,10 +58,8 @@ async def generate_history_summary(user_id: str, formatted_text: str) -> str:
         if hasattr(result, "content"):
             summary_text = result.content.strip()
         elif isinstance(result, dict):
-            # If 'response' key has text
             summary_text = result.get("response", "").strip()
             if not summary_text:
-                # fallback to first string value found
                 for v in result.values():
                     if isinstance(v, str):
                         summary_text = v.strip()
