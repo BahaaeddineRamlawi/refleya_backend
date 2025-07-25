@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from enum import Enum
+from typing import Optional
 from database import ensure_wellness_progress_exists
 
 from services.message_processor import process_user_message
@@ -22,13 +23,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Role(str, Enum):
-    supporter = "supporter"
-    challenger = "challenger"
-
 class ChatRequest(BaseModel):
     message: str
-    role: Role = Role.supporter 
+    mode: Optional[str] = "leya"
 
 class WellnessRequest(BaseModel):
     pass
@@ -43,8 +40,9 @@ DEFAULT_SESSION_ID = "session_4"
 @app.post("/api/chat")
 async def chat_endpoint(chat_req: ChatRequest):
     user_message = chat_req.message.strip()
-    role = chat_req.role.value
-    mode = chat_req.mode if hasattr(chat_req, "mode") else "leya"  # default
+    # role = chat_req.role.value
+    mode = chat_req.mode or "leya"
+
 
     if not user_message:
         raise HTTPException(status_code=400, detail="Empty message is not allowed.")
