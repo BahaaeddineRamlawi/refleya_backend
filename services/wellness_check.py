@@ -10,23 +10,23 @@ from utils.logger import logger
 from config.wellness_constants import WELLNESS_QUESTIONS
 
 
-async def rephrase_question(field: str, base_question: str) -> str:
-    try:
-        llm = await get_model_llm()
-        prompt = (
-            f"You're a friendly wellness coach. Rephrase the following question in a natural, slightly different way. "
-            f"Make it casual and concise, but still ask about the same topic: '{field}'.\n\n"
-            f"Original: {base_question}\n\n"
-            f"Rephrased:"
-        )
-        response = await llm.ainvoke(prompt)
-        text = response.content if hasattr(response, "content") else str(response)
-        result = text.strip().strip('"').strip("'")
-        logger.debug(f"Rephrased question for '{field}': {result}")
-        return result
-    except Exception as e:
-        logger.error(f"Error rephrasing question for field '{field}': {e}", exc_info=True)
-        return base_question  # Fallback to original
+# async def rephrase_question(field: str, base_question: str) -> str:
+#     try:
+#         llm = await get_model_llm()
+#         prompt = (
+#             f"You're a friendly wellness coach. Rephrase the following question in a natural, slightly different way. "
+#             f"Make it casual and concise, but still ask about the same topic: '{field}'.\n\n"
+#             f"Original: {base_question}\n\n"
+#             f"Rephrased:"
+#         )
+#         response = await llm.ainvoke(prompt)
+#         text = response.content if hasattr(response, "content") else str(response)
+#         result = text.strip().strip('"').strip("'")
+#         logger.debug(f"Rephrased question for '{field}': {result}")
+#         return result
+#     except Exception as e:
+#         logger.error(f"Error rephrasing question for field '{field}': {e}", exc_info=True)
+#         return base_question
 
 
 async def extract_answer_from_input(user_message: str, field: str) -> str | None:

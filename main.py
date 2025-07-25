@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from enum import Enum
 from typing import Optional
 from database import ensure_wellness_progress_exists
 
@@ -40,7 +39,6 @@ DEFAULT_SESSION_ID = "session_4"
 @app.post("/api/chat")
 async def chat_endpoint(chat_req: ChatRequest):
     user_message = chat_req.message.strip()
-    # role = chat_req.role.value
     mode = chat_req.mode or "leya"
 
 
@@ -62,8 +60,6 @@ async def chat_endpoint(chat_req: ChatRequest):
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
-
-
     
 
 @app.post("/api/wellness-check")
@@ -76,6 +72,5 @@ async def trigger_wellness_check():
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Wellness error: {str(e)}")
-
 
 # run server: uvicorn main:app --reload --port 8000

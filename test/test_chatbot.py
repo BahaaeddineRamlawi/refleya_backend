@@ -10,8 +10,7 @@ MAX_INPUT_LENGTH = int(os.getenv("MAX_INPUT_LENGTH"))
 
 async def chat():
     user_id = "test_user_2"
-    # session_id = str(uuid.uuid4())  # New session each run
-    session_id = "session_2"
+    session_id = str(uuid.uuid4())
 
     print("Chatbot started. Type 'exit' to quit.")
 
