@@ -82,6 +82,12 @@ async def get_long_term_history(user_id: str) -> str:
     try:
         logger.info(f"[Long-term memory] Fetching existing history for user_id: {user_id}")
         existing_history = await get_long_term_note(user_id)
+
+        if isinstance(existing_history, dict):
+            existing_history = existing_history.get("text", "")
+        elif not isinstance(existing_history, str):
+            existing_history = str(existing_history)
+
         logger.debug(f"[Long-term memory] Existing history: {existing_history}")
 
         pairs = await get_user_assistant_pairs(user_id)
