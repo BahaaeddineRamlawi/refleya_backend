@@ -1,5 +1,5 @@
 import os
-# import uuid
+import uuid
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -34,7 +34,7 @@ class WellnessRequest(BaseModel):
 #     session_id: str | None = None
 
 DEFAULT_USER_ID = "test_user_4"
-DEFAULT_SESSION_ID = "session_4"
+DEFAULT_SESSION_ID = str(uuid.uuid4())
 
 @app.post("/api/chat")
 async def chat_endpoint(chat_req: ChatRequest):
